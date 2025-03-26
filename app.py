@@ -8,7 +8,7 @@ from models import db, Produto
 from forms import ProdutoForm
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://estoque.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estoque.db'
 app.config['SECRET_KEY'] = 'chave_secreta'
 
 db.init_app(app)
