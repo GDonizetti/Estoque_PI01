@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Adicionar Produto</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.nome.label }} 
+            {{ form.nome(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.quantidade.label }} 
+            {{ form.quantidade(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.preco.label }} 
+            {{ form.preco(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-success">Adicionar</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Voltar</a>
+    </form>
+{% endblock %}
