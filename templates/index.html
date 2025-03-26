@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h2>Lista de Produtos</h2>
     <a href="{{ url_for('add_produto') }}" class="btn btn-primary mb-3">Adicionar Produto</a>
-    <table class="table">
+    <form method="GET" action="{{ url_for('index') }}" class="mb-3">
+        <input type="text" name="q" class="form-control" placeholder="Buscar produto...">
+        <button type="submit" class="btn btn-secondary mb-2">Buscar</button>
+    </form>
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Nome</th>
                 <th>Quantidade</th>
-                <th>Preço</th>
+                <th>Preço (R$)</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -16,7 +21,7 @@
             <tr>
                 <td>{{ produto.nome }}</td>
                 <td>{{ produto.quantidade }}</td>
-                <td>R$ {{ produto.preco }}</td>
+                <td>R$ {{ "%.2f"|format(produto.preco) }}</td>
                 <td>
                     <a href="{{ url_for('delete_produto', id=produto.id) }}" class="btn btn-danger btn-sm">Excluir</a>
                 </td>

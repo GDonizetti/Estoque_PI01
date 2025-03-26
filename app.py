@@ -1,8 +1,3 @@
-# CONFIGURAÇÃO DO FLASK
-# CONEXÃO AO DB
-# DEFINE ADICIONAR / REMOVER / LISTAR PRODUTOS
-
-
 from flask import Flask, render_template, redirect, url_for, request
 from models import db, Produto
 from forms import ProdutoForm
@@ -15,21 +10,29 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    produtos = Produto.query.all()
+    query = request.args.get('q')
+    if query:
+        produtos = Produto.query.filter(Produto.nome.contains(query)).all()
+    else:
+        produtos = Produto.query.all()
+    print(produtos)
     return render_template('index.html', produtos=produtos)
 
-@app.route('/add', methods=['GET','POST'])
+@app.route('/add', methods=['GET', 'POST'])
 def add_produto():
     form = ProdutoForm()
     if form.validate_on_submit():
+        print(f"Adicionando: Nome={form.nome.data}, Quantidade={form.quantidade.data}, Preço={form.preco.data}")
         novo_produto = Produto(
-            nome = form.nome.data,
-            quantidade = form.quantidade.data,
-            preco = form.preco.data
+            nome=form.nome.data,
+            quantidade=form.quantidade.data,
+            preco=form.preco.data
         )
         db.session.add(novo_produto)
         db.session.commit()
         return redirect(url_for('index'))
+    else:
+        print("Erro no formulário:", form.errors)
     return render_template('add_produto.html', form=form)
 
 @app.route('/delete/<int:id>')
@@ -39,6 +42,14 @@ def delete_produto(id):
         db.session.delete(produto)
         db.session.commit()
     return redirect(url_for('index'))
+
+@app.route('/buscar', methods=['GET'])
+def buscar():
+    termo = request.args.get('q')
+    resultados = None
+    if termo:
+        resultados = Produto.query.filter(Produto.nome.contains(termo)).all()
+    return render_template('index.html', resultados=resultados)
 
 if __name__ == '__main__':
     with app.app_context():

@@ -10,11 +10,13 @@
         </div>
         <div class="mb-3">
             {{ form.quantidade.label }} 
-            {{ form.quantidade(class="form-control") }}
+            {{ form.quantidade(class="form-control", inputmode="numeric", pattern="[0-9]*") }}
+            <small class="form-text text-muted">Digite apenas números inteiros</small>
         </div>
         <div class="mb-3">
             {{ form.preco.label }} 
-            {{ form.preco(class="form-control") }}
+            {{ form.preco(class="form-control", inputmode="decimal", pattern="[0-9]+([,\.][0-9]+)?", placeholder="Exemplo: 5,99") }}
+            <small class="form-text text-muted">Use apenas números com separador vírgula ou ponto.</small>
         </div>
         <button type="submit" class="btn btn-success">Adicionar</button>
         <a href="{{ url_for('index') }}" class="btn btn-secondary">Voltar</a>

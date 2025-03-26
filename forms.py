@@ -1,11 +1,21 @@
-# FORMULARIO PARA ADICIONAR PRODUTOS NO ESTOQUE
-
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, FloatField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, NumberRange
+from wtforms.widgets import TextInput
+
+class PrecoField(StringField):
+    def process_formdata(self, valuelist):
+        if valuelist:
+            try:
+                self.data = float(valuelist[0].replace(',', '.'))
+                if self.data < 0:
+                    raise ValueError("O preço não pode ser negativo")
+            except ValueError:
+                self.data = None
+                raise ValueError("Digite um valor válido (exemplo: 5,99")
 
 class ProdutoForm(FlaskForm):
     nome = StringField('Nome do Produto', validators=[DataRequired()])
-    quantidade = IntegerField('Quantidade', validators=[DataRequired()])
-    preco = FloatField('Preço', validators=[DataRequired()])
+    quantidade = IntegerField('Quantidade', validators=[DataRequired(), NumberRange(min=1, message="A quantidade deve ser maior que 0.")])
+    preco = PrecoField('Preço (R$)', validators=[DataRequired()], widget=TextInput())
     submit = SubmitField('Adicionar Produto')
