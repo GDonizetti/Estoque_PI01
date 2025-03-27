@@ -1,7 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, FloatField, SubmitField
-from wtforms.validators import DataRequired, NumberRange
+from wtforms import StringField, IntegerField, SubmitField, PasswordField
+from wtforms.validators import DataRequired, NumberRange, Length
 from wtforms.widgets import TextInput
+
+class LoginForm(FlaskForm):
+    username = StringField('Usuário', validators=[DataRequired(), Length(min=3, max=50)])
+    password = PasswordField('Senha', validators=[DataRequired()])
+    submit = SubmitField('Entrar')
 
 class PrecoField(StringField):
     def process_formdata(self, valuelist):
