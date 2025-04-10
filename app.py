@@ -57,7 +57,8 @@ def add_produto():
         novo_produto = Produto(
             nome=form.nome.data,
             quantidade=form.quantidade.data,
-            preco=form.preco.data
+            preco=form.preco.data,
+            validade=form.validade.data
         )
         db.session.add(novo_produto)
         db.session.commit()
@@ -83,6 +84,7 @@ def editar_produto(id):
     if request.method == 'POST' and form.validate_on_submit():
         produto.quantidade = form.quantidade.data
         produto.preco = form.preco.data
+        produto.validade = form.validade.data
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('editar_produto.html', form=form, produto=produto)

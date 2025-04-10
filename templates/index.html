@@ -17,6 +17,7 @@
                 <th>Nome</th>
                 <th>Quantidade</th>
                 <th>Preço (R$)</th>
+                <th>Validade</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -26,6 +27,7 @@
                 <td>{{ produto.nome }}</td>
                 <td>{{ produto.quantidade }}</td>
                 <td>R$ {{ "%.2f"|format(produto.preco) }}</td>
+                <td>{{ produto.validade.strftime('%d/%m/%Y') if produto.validade else '---'}}</td>
                 <td>
                     {% if session.get('usuario_id') %}
                         <a href="{{ url_for('editar_produto', id=produto.id) }}" class="btn btn-warning btn-sm">Editar</a>
