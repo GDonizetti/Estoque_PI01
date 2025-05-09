@@ -1,3 +1,5 @@
+import "./InputForm.css";
+
 type Props = {
   type: string;
   placeholder: string;
@@ -10,6 +12,7 @@ const InputForm = ({ type, placeholder, onChange }: Props) => {
       type={type}
       placeholder={placeholder}
       onChange={(e) => onChange(e.target.value)}
+      className="input-form"
     />
   );
 };

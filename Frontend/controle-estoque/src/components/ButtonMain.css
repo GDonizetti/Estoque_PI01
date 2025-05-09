@@ -1,0 +1,29 @@
+.button-main {
+  display: inline-block;
+  padding: 8px 64px;
+  background-color: var(--btn-blue-base);
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  width: 100%;
+
+  color: var(--neutral-white);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.button-main:hover {
+  background-color: var(--btn-blue-hover);
+}
+
+.button-main:active {
+  background-color: var(--btn-blue-active);
+}
+
+.button-main:disabled {
+  background-color: var(--neutral-grey);
+  cursor: not-allowed;
+}

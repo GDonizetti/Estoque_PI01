@@ -1,11 +1,61 @@
-:root {
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+* {
   font-family: "Inter";
-  --neutral-white: #fefefe;
-  --blueish-light: #f0f4f8;
-  --blueish-lighter: #f7f9fb;
+  font-style: normal;
+  line-height: normal;
 }
+
+:root {
+  --background-light: #f0f4f8;
+  --background-lighter: #f7f9fb;
+
+  --neutral-black: #0d0d0d;
+  --neutral-dark: #626262;
+  --neutral-grey: #d0d0d0;
+  --neutral-white: #fefefe;
+
+  --btn-blue-base: #0f64e5;
+  --btn-blue-hover: #0750c0;
+  --btn-blue-active: #04409e;
+
+  --feedback-error: #d41a1a;
+
+  --stock-onstock: #0196da;
+  --stock-lowstock: #e78f2c;
+  --stock-nostock: #e4515e;
+}
+
+h1 {
+  color: var(--neutral-black);
+  width: 100%;
+  margin: 0%;
+}
+
+.navbrand-semibold {
+  color: var(--neutral-black);
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.body-medium {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.body-regular {
+  color: var(--neutral-dark);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.small-medium {
+  color: var(--feedback-error);
+  font-size: 16px;
+  font-weight: 500;
+}
+
 html {
-  background-color: var(--blueish-lighter);
+  background-color: var(--background-lighter);
   display: flex;
   width: 100vw;
   height: 100vh;

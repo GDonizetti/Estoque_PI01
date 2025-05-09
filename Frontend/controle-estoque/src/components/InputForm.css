@@ -1,0 +1,17 @@
+.input-form {
+  outline: none;
+  border: none;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--neutral-grey);
+  background-color: var(--neutral-white);
+  width: 100%;
+
+  color: var(--neutral-dark);
+  font-size: 20px;
+  font-weight: 400;
+
+  &:focus,
+  &:hover {
+    border-bottom-color: var(--neutral-dark);
+  }
+}

@@ -1,11 +1,11 @@
 .login-div {
   display: flex;
-  width: 463px;
-  height: 516px;
+  width: 330px;
+  max-height: fit-content;
   padding: 64px;
   flex-direction: column;
   align-items: center;
-  gap: 64px;
+  border-radius: 16px;
   flex-shrink: 0;
   background-color: var(--neutral-white);
 }
