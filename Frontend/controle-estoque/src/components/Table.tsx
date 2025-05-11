@@ -42,7 +42,6 @@ const Table = () => {
           quantidade: item.quantidade,
           valor: item.preco,
           validade: new Date(item.validade).toLocaleDateString("pt-BR"),
-          status: item.quantidade > 0 ? "Ativo" : "Inativo",
         }));
         setData(formattedData);
       } catch (error) {
@@ -58,7 +57,6 @@ const Table = () => {
     quantidade: number;
     valor: number;
     validade: string;
-    status: string;
   };
 
   const columnHelper = createColumnHelper<Produto>();
@@ -83,11 +81,6 @@ const Table = () => {
       }),
       columnHelper.accessor("validade", {
         header: "Validade",
-        cell: (info: CellContext<Produto, string>) => info.getValue(),
-        meta: { align: "left" },
-      }),
-      columnHelper.accessor("status", {
-        header: "Status",
         cell: (info: CellContext<Produto, string>) => info.getValue(),
         meta: { align: "left" },
       }),
