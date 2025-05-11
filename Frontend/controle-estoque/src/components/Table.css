@@ -39,7 +39,7 @@
   padding: 4px 8px;
   font-size: 0.85rem;
   background: none;
-  border: 1px solid black;
+  border: none;
   cursor: pointer;
 }
 
@@ -51,9 +51,11 @@
 }
 
 .pagination button {
-  padding: 6px 12px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--neutral-white);
   cursor: pointer;
-  font-size: 0.9rem;
 }
 
 /* .stock-table {

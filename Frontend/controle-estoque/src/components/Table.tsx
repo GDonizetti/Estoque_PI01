@@ -1,12 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
 import "./Table.css";
-
-declare module "@tanstack/table-core" {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface ColumnMeta<TData, TValue> {
-    align?: "left" | "right";
-  }
-}
 import {
   createColumnHelper,
   useReactTable,
@@ -15,6 +8,13 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import type { CellContext } from "@tanstack/table-core";
+
+declare module "@tanstack/table-core" {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface ColumnMeta<TData, TValue> {
+    align?: "left" | "right";
+  }
+}
 
 type ProdutoAPI = {
   id: number;
@@ -94,7 +94,30 @@ const Table = () => {
       columnHelper.display({
         id: "acoes",
         header: "Ações",
-        cell: () => <button className="btn-action">Editar</button>,
+        cell: () => (
+          <button className="btn-action">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="6"
+              viewBox="0 0 24 6"
+              fill="none"
+            >
+              <path
+                d="M21.5 5.49995C22.8807 5.49995 24 4.38068 24 2.99998C24 1.61928 22.8807 0.5 21.5 0.5C20.1193 0.5 19 1.61928 19 2.99998C19 4.38068 20.1193 5.49995 21.5 5.49995Z"
+                fill="#0D0D0D"
+              />
+              <path
+                d="M12 5.49995C13.3807 5.49995 14.5 4.38068 14.5 2.99998C14.5 1.61928 13.3807 0.5 12 0.5C10.6193 0.5 9.5 1.61928 9.5 2.99998C9.5 4.38068 10.6193 5.49995 12 5.49995Z"
+                fill="#0D0D0D"
+              />
+              <path
+                d="M2.49998 5.49995C3.88069 5.49995 4.99997 4.38068 4.99997 2.99998C4.99997 1.61928 3.88069 0.5 2.49998 0.5C1.11928 0.5 0 1.61928 0 2.99998C0 4.38068 1.11928 5.49995 2.49998 5.49995Z"
+                fill="#0D0D0D"
+              />
+            </svg>
+          </button>
+        ),
         meta: { align: "right" },
       }),
     ],
@@ -161,16 +184,18 @@ const Table = () => {
 
       <div className="pagination">
         <button
+          className="body-medium"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
           Anterior
         </button>
-        <span>
+        <span className="pagination-count small-medium">
           Página {table.getState().pagination.pageIndex + 1} de{" "}
           {table.getPageCount()}
         </span>
         <button
+          className="body-medium"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
