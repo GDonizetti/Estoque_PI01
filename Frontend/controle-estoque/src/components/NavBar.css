@@ -9,7 +9,6 @@
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  margin-bottom: 70px;
 }
 
 .navbar-left {
@@ -30,6 +29,7 @@
   padding: 0;
   gap: 1.5rem;
   list-style: none;
+  color: var(--neutral-black);
 }
 
 .navbar-right,
