@@ -1,4 +1,10 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import "./Table.css";
 import {
   createColumnHelper,
@@ -24,33 +30,37 @@ type ProdutoAPI = {
   validade: string;
 };
 
-const Table = () => {
+const Table = forwardRef((_, ref) => {
   const [data, setData] = useState<Produto[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem("authToken");
-        const response = await fetch("http://localhost:5000/produtos", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const result: ProdutoAPI[] = await response.json();
-        const formattedData = result.map((item) => ({
-          produto: item.nome,
-          quantidade: item.quantidade,
-          valor: item.preco,
-          validade: new Date(item.validade).toLocaleDateString("pt-BR"),
-        }));
-        setData(formattedData);
-      } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await fetch("http://localhost:5000/produtos", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const result: ProdutoAPI[] = await response.json();
+      const formattedData = result.map((item) => ({
+        produto: item.nome,
+        quantidade: item.quantidade,
+        valor: item.preco,
+        validade: new Date(item.validade).toLocaleDateString("pt-BR"),
+      }));
+      setData(formattedData);
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
+
+  useImperativeHandle(ref, () => ({
+    reloadData: fetchData,
+  }));
 
   type Produto = {
     produto: string;
@@ -197,6 +207,6 @@ const Table = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Table;

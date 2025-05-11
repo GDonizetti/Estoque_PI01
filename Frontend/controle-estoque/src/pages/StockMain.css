@@ -7,6 +7,7 @@
 }
 
 .heading-main {
+  color: var(--neutral-black);
   display: flex;
   align-self: flex-start;
 }
@@ -39,4 +40,16 @@
   border: 1px solid var(--btn-blue-base);
   background: var(--btn-blue-base);
   color: var(--neutral-white);
+}
+
+.add-product:hover {
+  background: var(--btn-blue-hover);
+  border: 1px solid var(--btn-blue-hover);
+  cursor: pointer;
+}
+
+.add-product:active {
+  background: var(--btn-blue-active);
+  border: 1px solid var(--btn-blue-active);
+  cursor: pointer;
 }

@@ -1,20 +1,40 @@
 import "./StockMain.css";
 import NavBar from "../components/NavBar";
 import Table from "../components/Table";
+import StockModal from "../components/StockModal";
+import { useState, useRef } from "react";
 
 function StockMain() {
+  const [isVisible, setIsVisible] = useState(false);
+  const tableRef = useRef<{ reloadData: () => void } | null>(null);
+
+  function handleAddProduct() {
+    setIsVisible(true);
+  }
+
+  function handleCloseModal() {
+    setIsVisible(false);
+    if (tableRef.current) {
+      tableRef.current.reloadData();
+    }
+  }
+
   return (
     <>
       <NavBar />
+      {isVisible && <StockModal onClose={() => handleCloseModal()} />}
       <div className="wrapper-main">
-        <h1 className="heading-main ">Estoque</h1>
+        <h1 className="heading-main">Estoque</h1>
         <div className="wrapper-product-actions">
           <input
             type="search"
             className="search-product body-regular"
             placeholder="Procurar por produto..."
           />
-          <button className="add-product button-semibold">
+          <button
+            className="add-product button-semibold"
+            onClick={() => handleAddProduct()}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -42,7 +62,7 @@ function StockMain() {
             Adicionar produto
           </button>
         </div>
-        <Table />
+        <Table ref={tableRef} />
       </div>
     </>
   );

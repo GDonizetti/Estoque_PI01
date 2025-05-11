@@ -2,6 +2,11 @@ import "./NavBar.css";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
+  const exit = () => {
+    localStorage.removeItem("authToken");
+    window.location.href = "/Login";
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -13,7 +18,9 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-right">
-        <button className="exit-button button-semibold">Sair</button>
+        <button className="exit-button button-semibold" onClick={() => exit()}>
+          Sair
+        </button>
       </div>
     </nav>
   );
