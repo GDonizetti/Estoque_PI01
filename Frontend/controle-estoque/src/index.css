@@ -19,10 +19,15 @@
   --btn-blue-active: #04409e;
 
   --feedback-error: #d41a1a;
+  --feedback-error-darker: #a90a0a;
 
   --stock-onstock: #0196da;
   --stock-lowstock: #e78f2c;
   --stock-nostock: #e4515e;
+}
+
+body {
+  margin: 0;
 }
 
 h1 {
@@ -31,9 +36,8 @@ h1 {
   margin: 0%;
 }
 
-.navbrand-semibold {
-  color: var(--neutral-black);
-  font-size: 32px;
+.button-semibold {
+  font-size: 24px;
   font-weight: 600;
 }
 
@@ -54,11 +58,7 @@ h1 {
   font-weight: 500;
 }
 
-html {
-  background-color: var(--background-lighter);
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
+a {
+  text-decoration: none;
+  color: var(--neutral-black);
 }

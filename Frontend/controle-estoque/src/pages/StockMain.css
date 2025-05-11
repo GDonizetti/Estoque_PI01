@@ -1,0 +1,12 @@
+.wrapper-main {
+  background-color: var(--background-lighter);
+  display: flex;
+  text-align: left;
+  justify-content: space-between;
+  flex-flow: column wrap;
+}
+
+.heading-main {
+  display: flex;
+  align-self: flex-start;
+}

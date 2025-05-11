@@ -1,0 +1,68 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--background-light);
+  color: var(--neutral-black);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  margin-bottom: 70px;
+}
+
+.navbar-left {
+  padding: 1rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbrand-semibold {
+  color: var(--neutral-black);
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.nav-links {
+  display: flex;
+  padding: 0;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.navbar-right,
+.exit-button {
+  border: none;
+  padding: 1rem 3rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.exit-button {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  gap: 24px;
+  padding: 8px 40px;
+  background-color: none;
+  border: 2px solid var(--feedback-error);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  color: var(--feedback-error);
+}
+
+.exit-button:hover {
+  background-color: var(--feedback-error);
+  color: var(--neutral-white);
+}
+
+.exit-button:active {
+  background-color: var(--feedback-error-darker);
+  border: 2px solid var(--feedback-error-darker);
+  color: var(--neutral-white);
+}
