@@ -1,16 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ButtonMain from "./ButtonMain";
-import "./StockModal.css";
+import "./StockEditModal.css";
+import type { Produto } from "./Table";
 
 type Props = {
   onClose: () => void;
+  productToEdit: Produto;
 };
 
-const StockModal = ({ onClose }: Props) => {
+const StockEditModal = ({ onClose, productToEdit }: Props) => {
   const [productName, setProductName] = useState("");
   const [productQuantity, setProductQuantity] = useState<number | "">("");
   const [productPrice, setProductPrice] = useState<number | "">("");
   const [productExpiry, setProductExpiry] = useState<Date | "">("");
+  const [productId, setProductId] = useState<number | "">("");
+
+  useEffect(() => {
+    if (productToEdit) {
+      setProductName(productToEdit.produto);
+      setProductQuantity(productToEdit.quantidade);
+      setProductPrice(productToEdit.valor);
+      setProductExpiry(parseDateFromLocale(productToEdit.validade) || "");
+      setProductId(productToEdit.id);
+    }
+  }, [productToEdit]);
+
+  const parseDateFromLocale = (dateString: string): Date | "" => {
+    const [day, month, year] = dateString.split("/").map(Number); // Divide a string no formato DD/MM/YYYY
+    if (!day || !month || !year) return ""; // Retorna string vazia se os valores não forem válidos
+    return new Date(year, month - 1, day); // Cria o objeto Date (mês começa em 0)
+  };
 
   const handleSave = async () => {
     if (!productName || !productQuantity || !productPrice || !productExpiry) {
@@ -18,6 +37,7 @@ const StockModal = ({ onClose }: Props) => {
       return;
     }
 
+    console.log(productExpiry.toISOString().split("T")[0]);
     const productData = {
       nome: productName,
       preco: productPrice,
@@ -27,14 +47,17 @@ const StockModal = ({ onClose }: Props) => {
 
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch("http://localhost:5000/produtos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(productData),
-      });
+      const response = await fetch(
+        "http://localhost:5000/produtos/" + productId,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(productData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to save product");
@@ -124,10 +147,10 @@ const StockModal = ({ onClose }: Props) => {
             }}
           />
         </div>
-        <ButtonMain text="Adicionar" disabled={false} onClick={handleSave} />
+        <ButtonMain text="Salvar" disabled={false} onClick={handleSave} />
       </div>
     </div>
   );
 };
 
-export default StockModal;
+export default StockEditModal;
