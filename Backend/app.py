@@ -90,7 +90,8 @@ def logout():
 @app.route('/produtos', methods=['GET'])
 @login_requerido
 def listar_produtos():
-    produtos = Produto.query.all()
+    query = request.args.get('productName') 
+    produtos = Produto.query.filter(Produto.nome.contains(query))
     lista = [
         {
             'id': p.id,
@@ -134,6 +135,7 @@ def editar_produto(id):
     data = request.get_json()
 
     try:
+        produto.nome = data['nome']
         produto.quantidade = int(data['quantidade'])
         produto.preco = float(str(data['preco']).replace(',', '.'))
         produto.validade = datetime.strptime(data['validade'], '%Y-%m-%d').date()
