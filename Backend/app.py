@@ -1,12 +1,15 @@
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_bcrypt import Bcrypt
+from flask_cors import CORS
+import jwt
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estoque.db'
-app.config['SECRET_KEY'] = 'sua_chave_secreta'
+app.config['SECRET_KEY'] = 'chavedasboas'
 
 # Extensões
 db = SQLAlchemy(app)
@@ -31,15 +34,39 @@ class Produto(db.Model):
     preco = db.Column(db.Float, nullable=False)
     validade = db.Column(db.Date, nullable=False)
 
-# Login
+# Geração e verificação de token JWT
+def gerar_token(usuario_id):
+    payload = {
+        'usuario_id': usuario_id,
+        'exp': datetime.utcnow() + timedelta(hours=1)
+    }
+    token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
+    return token
+
+def verificar_token(token):
+    try:
+        payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+        return payload['usuario_id']
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.InvalidTokenError:
+        return None
+
+# Decorador de login com JWT
 def login_requerido(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'usuario_id' not in session:
-            return jsonify({'erro': 'Login requerido'}), 401
+        auth_header = request.headers.get('Authorization', '')
+        token = auth_header.replace('Bearer ', '')
+
+        usuario_id = verificar_token(token)
+        if not usuario_id:
+            return jsonify({'erro': 'Token inválido ou expirado'}), 401
+
         return f(*args, **kwargs)
     return decorated_function
 
+# Login (gera token)
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -49,22 +76,22 @@ def login():
     usuario = Usuario.query.filter_by(username=username).first()
 
     if usuario and usuario.check_password(password):
-        session['usuario_id'] = usuario.id
-        return jsonify({'mensagem': 'Login realizado com sucesso'}), 200
+        token = gerar_token(usuario.id)
+        return jsonify({'mensagem': 'Login realizado com sucesso', 'token': token}), 200
     else:
         return jsonify({'erro': 'Usuário ou senha inválidos'}), 401
 
+# Logout (sem efeito real com JWT)
 @app.route('/logout', methods=['POST'])
 def logout():
-    session.pop('usuario_id', None)
-    return jsonify({'mensagem': 'Logout realizado com sucesso'}), 200
-
+    return jsonify({'mensagem': 'Logout simbólico com JWT — apenas descarte o token no cliente'}), 200
 
 # Listar produtos
 @app.route('/produtos', methods=['GET'])
 @login_requerido
 def listar_produtos():
-    produtos = Produto.query.all()
+    query = request.args.get('productName') 
+    produtos = Produto.query.filter(Produto.nome.contains(query))
     lista = [
         {
             'id': p.id,
@@ -108,6 +135,7 @@ def editar_produto(id):
     data = request.get_json()
 
     try:
+        produto.nome = data['nome']
         produto.quantidade = int(data['quantidade'])
         produto.preco = float(str(data['preco']).replace(',', '.'))
         produto.validade = datetime.strptime(data['validade'], '%Y-%m-%d').date()

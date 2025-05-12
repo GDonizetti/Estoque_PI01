@@ -1,0 +1,25 @@
+.wrapper-login {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-div {
+  display: flex;
+  width: 330px;
+  max-height: fit-content;
+  padding: 64px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 16px;
+  flex-shrink: 0;
+  background-color: var(--neutral-white);
+}
+
+.error-msg {
+  height: 0;
+  margin: 0.5rem 0 0 0;
+  color: var(--feedback-error);
+}
