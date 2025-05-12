@@ -118,7 +118,7 @@ const StockModal = ({ onClose }: Props) => {
             }
           />
         </div>
-        <ButtonMain text="Salvar" onClick={handleSave} />
+        <ButtonMain text="Salvar" disabled={false} onClick={handleSave} />
       </div>
     </div>
   );

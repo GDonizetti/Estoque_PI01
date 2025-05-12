@@ -15,3 +15,8 @@
     border-bottom-color: var(--neutral-dark);
   }
 }
+
+.input-form-error {
+  border-bottom: 2px solid var(--feedback-error);
+  color: var(--feedback-error);
+}

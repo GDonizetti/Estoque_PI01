@@ -4,6 +4,7 @@ import InputForm from "../components/InputForm";
 import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 const CustomH1 = styled.div`
   margin-bottom: 64px;
@@ -20,11 +21,24 @@ const CustomButtonMain = styled.div`
   width: 100%;
 `;
 
-let username = "";
-let password = "";
-
 function Login() {
   const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [isLoginFilled, setIsLoginFilled] = useState(false);
+  const [isLoginValid, setIsLoginValid] = useState(true);
+
+  useEffect(() => {
+    setIsLoginValid(true);
+    if (username != "" && password != "") {
+      setIsLoginFilled(true);
+    } else {
+      setIsLoginFilled(false);
+    }
+  }, [username, password]);
+
   async function StockLogin() {
     const corpo: RequestLogin = {
       username: username,
@@ -38,6 +52,10 @@ function Login() {
       },
       body: JSON.stringify(corpo),
     }).then(async (res) => {
+      if (res.status !== 200) {
+        setIsLoginValid(false);
+        return;
+      }
       const data = await res.json();
       localStorage.setItem("authToken", data.token);
       navigate("/StockMain");
@@ -51,7 +69,14 @@ function Login() {
 
   return (
     <>
-      <div className="wrapper-login">
+      <div
+        className="wrapper-login"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            StockLogin();
+          }
+        }}
+      >
         <div className="login-div">
           <CustomH1>
             <h1>Faça seu login</h1>
@@ -59,18 +84,31 @@ function Login() {
 
           <InputForm
             type="text"
-            onChange={(value) => (username = value)}
+            isInvalid={!isLoginValid}
+            onChange={(value) => setUsername(value)}
             placeholder="Usuário"
           />
           <CustomInputForm>
             <InputForm
               type="password"
-              onChange={(value) => (password = value)}
+              onChange={(value) => setPassword(value)}
+              isInvalid={!isLoginValid}
               placeholder="Senha"
             />
           </CustomInputForm>
+          <span className="error-msg small-medium">
+            {isLoginValid ? (
+              ""
+            ) : (
+              <span>Usuário ou senha incorretos. Tente de novo.</span>
+            )}
+          </span>
           <CustomButtonMain>
-            <ButtonMain text="Entrar" onClick={() => StockLogin()} />
+            <ButtonMain
+              text="Entrar"
+              onClick={() => StockLogin()}
+              disabled={!isLoginFilled || !isLoginValid}
+            />
           </CustomButtonMain>
         </div>
       </div>
