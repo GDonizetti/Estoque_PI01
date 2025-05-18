@@ -7,6 +7,12 @@ Este repositório contém dois projetos separados:
 
 ---
 
+> ℹ️ Este README foi criado para facilitar a execução **local** dos projetos do repositório original.  
+> Para acessar o repositório principal, acesse:  
+> 👉 [Repositório original](https://github.com/Vyce96/Estoque_PI01)
+
+---
+
 ## ⚙️ Backend (Python)
 
 ### Pré-requisitos
