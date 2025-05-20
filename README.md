@@ -23,6 +23,7 @@ Este repositório contém dois projetos separados:
 
 ```bash
 cd Backend
+pip install -r .\requirements.txt
 py .\app.py 
 ```
 
