@@ -45,24 +45,85 @@ npm run dev
 
 🧰 Melhorias Técnicas Implementadas
 
-Recriação completa do ambiente virtual do back-end (venv) para corrigir falhas e garantir compatibilidade entre os ambientes locais.
+Reestruturação completa do back-end em Flask para garantir estabilidade, repetibilidade e preparo para integração com o front-end.
+1. Padronização do ambiente e dependências
 
-Instalação e padronização das dependências do Flask:
+
+Recriação completa do ambiente virtual do back-end (venv) para corrigir falhas e garantir compatibilidade entre as máquinas do grupo.
+
+
+Padronização e atualização das dependências no arquivo requirements.txt, incluindo:
+
 
 flask
 
+
 flask_sqlalchemy
+
 
 flask_bcrypt
 
+
 flask_cors
+
 
 PyJWT
 
-Geração do arquivo requirements.txt atualizado, garantindo reprodutibilidade do ambiente para toda a equipe.
 
-Criação do arquivo .gitignore para evitar o versionamento de arquivos temporários e específicos do ambiente local (venv/, __pycache__/, instance/).
 
-Validação do back-end rodando localmente com sucesso em http://127.0.0.1:5000/.
 
-Organização do fluxo Git: criação da branch update-flask e padronização do push via fork, com Pull Request documentando as melhorias.
+Criação do arquivo .gitignore para evitar envio de arquivos temporários e específicos de ambiente local (venv/, __pycache__/, instance/).
+
+
+2. Persistência de dados do estoque
+
+
+Configuração do SQLAlchemy para usar banco SQLite persistente (sqlite:///estoque.db).
+
+
+Antes, os itens cadastrados no estoque sumiam ao reiniciar o servidor Flask (os dados ficavam só na memória).
+
+
+Agora, os dados são gravados no arquivo estoque.db, o que mantém os produtos cadastrados mesmo após parar e iniciar de novo o servidor.
+Isso garante rastreabilidade do estoque e consistência para demonstração do sistema.
+
+
+3. Backend funcional e pronto para consumo pelo front-end
+
+
+Ativação de CORS (flask_cors) para permitir que o front-end React consiga consumir a API Flask sem bloqueio de navegador.
+
+
+Manutenção do sistema de login/autenticação funcionando.
+
+
+Separação clara entre back-end (Backend/) e front-end (Frontend/) para organização do projeto.
+
+
+4. Validação e fluxo de entrega
+
+
+Back-end testado e rodando localmente com sucesso em http://127.0.0.1:5000/.
+
+
+Criação da branch update-flask e envio via fork.
+
+
+Abertura de Pull Request com todas as melhorias acima, solicitando integração na main do repositório original do grupo.
+
+
+
+Esse texto faz três coisas importantes por você:
+
+
+Diz exatamente o que você entregou tecnicamente (sem enrolar).
+
+
+Explica a persistência de dados do estoque — que é melhoria real de negócio.
+
+
+Mostra que você formalizou processo (branch, fork, PR). Isso é ponto individual na avaliação.
+
+
+Próximo passo natural agora:
+cola isso no README, salva, faz git add README.md, git commit -m "Atualiza README com persistência e padronização", e depois git push myfork update-flask. Isso atualiza o PR automaticamente e coloca sua assinatura técnica dentro do histórico oficial.
