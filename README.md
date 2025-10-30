@@ -113,12 +113,6 @@ Abertura de Pull Request com todas as melhorias acima, solicitando integração 
 
 
 
-Esse texto faz três coisas importantes por você:
-
-
-Diz exatamente o que você entregou tecnicamente (sem enrolar).
-
-
 Explica a persistência de dados do estoque — que é melhoria real de negócio.
 
 
